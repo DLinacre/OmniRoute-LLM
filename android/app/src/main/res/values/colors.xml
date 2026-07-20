@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0f172a</color>
+    <color name="colorPrimaryDark">#0b1120</color>
+    <color name="colorAccent">#f0c14b</color>
+    <color name="premiumGold">#f0c14b</color>
+    <color name="navyDeep">#0b1120</color>
+    <color name="neonBlue">#60a5fa</color>
+</resources>

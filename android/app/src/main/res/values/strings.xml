@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">LLM</string>
+    <string name="title_activity_main">LLM</string>
+    <string name="package_name">com.dlinacre.llm</string>
+    <string name="custom_url_scheme">com.dlinacre.llm</string>
+</resources>

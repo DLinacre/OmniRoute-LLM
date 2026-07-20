@@ -1,0 +1,28 @@
+{
+  "appId": "com.dlinacre.llm",
+  "appName": "LLM",
+  "webDir": ".build/next",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https",
+    "hostname": "localhost",
+    "cleartext": true,
+    "url": "http://localhost:20128/wizard"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0,
+      "launchAutoHide": true,
+      "backgroundColor": "#0f172a",
+      "androidSplashResourceName": "splash",
+      "androidScaleType": "CENTER_CROP"
+    }
+  },
+  "android": {
+    "minSdkVersion": 24,
+    "targetSdkVersion": 35,
+    "compileSdkVersion": 35,
+    "buildType": "debug",
+    "androidXEnabled": true
+  }
+}
