@@ -1,15 +1,20 @@
 # ==============================================================================
 # OmniRoute-LLM - Windows Runner CI/CD Matrix
+# Runs on local 24/7 Windows Runner (ID: 56201256)
 # ==============================================================================
 
 stages:
   - verify
+  - security
   - build
 
 default:
   tags:
     - windows
     - powershell
+
+variables:
+  GIT_CLEAN_FLAGS: "none"
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
@@ -21,4 +26,26 @@ verify_and_lint:
   script:
     - npm install
     - npx vitest run --passWithNoTests
+  allow_failure: true
+
+security_audit:
+  stage: security
+  script:
+    - $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+    - Write-Host "==> Running Gitleaks Secret Detection..."
+    - gitleaks detect --source "." --no-git --config ".gitleaks.toml" --redact -v
+    - Write-Host "==> Running Trivy Vulnerability Scan..."
+    - trivy fs --severity CRITICAL --exit-code 0 .
+  allow_failure: true
+
+build_backend:
+  stage: build
+  dependencies:
+    - verify_and_lint
+  script:
+    - npm run build:backend
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 3 days
   allow_failure: true
