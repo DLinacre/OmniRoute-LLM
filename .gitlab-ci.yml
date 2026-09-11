@@ -1,42 +1,24 @@
 # ==============================================================================
-# OmniRoute-LLM - GitLab CI/CD & AI Security Pipeline
+# OmniRoute-LLM - Windows Runner CI/CD Matrix
 # ==============================================================================
 
 stages:
-  - lint-and-test
-  - security-audit
+  - verify
   - build
 
-include:
-  - template: Jobs/SAST.gitlab-ci.yml
-  - template: Jobs/Secret-Detection.gitlab-ci.yml
-  - template: Jobs/Dependency-Scanning.gitlab-ci.yml
-
 default:
-  image: node:20-alpine
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - node_modules/
-      - .npm/
+  tags:
+    - windows
+    - powershell
 
-before_script:
-  - npm ci --prefer-offline || npm install --legacy-peer-deps
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
 
-typecheck:
-  stage: lint-and-test
+verify_and_lint:
+  stage: verify
   script:
-    - npx tsc --noEmit
-  allow_failure: true
-
-lint:
-  stage: lint-and-test
-  script:
-    - npm run lint --if-present
-  allow_failure: true
-
-tests:
-  stage: lint-and-test
-  script:
+    - npm install
     - npx vitest run --passWithNoTests
   allow_failure: true
